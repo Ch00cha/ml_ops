@@ -1,0 +1,5 @@
+outs:
+- md5: 7ecd5f850188866275916276b53a9b6c
+  size: 185262
+  hash: md5
+  path: smoking.csv
