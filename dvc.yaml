@@ -1,0 +1,32 @@
+stages:
+  prepare-data:
+    cmd: python3 scripts/data_scripts/data_preparing.py
+    deps:
+    - data/raw/smoking.csv
+    - scripts/data_scripts/data_preparing.py
+    params:
+    - split.split_ratio
+    - split.seed
+  train-model:
+    cmd: python3 scripts/model_scripts/train.py
+    deps:
+    - data/raw/smoking.csv
+    - scripts/model_scripts/train.py
+    params:
+    - train.max_depth
+    - train.criterion
+    - train.min_samples_split
+    - train.min_samples_leaf
+    outs:
+    - models/model.pkl
+  test-model:
+    cmd: python3 scripts/model_scripts/test.py
+    deps:
+    - data/raw/smoking.csv
+    - scripts/model_scripts/test.py
+    metrics:
+    - evaluate/score.json:
+        cache: false
+
+
+    

@@ -1,0 +1,55 @@
+schema: '2.0'
+stages:
+  prepare-data:
+    cmd: python3 scripts/data_scripts/data_preparing.py
+    deps:
+    - path: data/raw/smoking.csv
+      hash: md5
+      md5: 7ecd5f850188866275916276b53a9b6c
+      size: 185262
+    - path: scripts/data_scripts/data_preparing.py
+      hash: md5
+      md5: 0b35a0d846bb0b3a5fc97fd83d2da55c
+      size: 2246
+    params:
+      params.yaml:
+        split.seed: 42
+        split.split_ratio: 0.2
+  train-model:
+    cmd: python3 scripts/model_scripts/train.py
+    deps:
+    - path: data/raw/smoking.csv
+      hash: md5
+      md5: 7ecd5f850188866275916276b53a9b6c
+      size: 185262
+    - path: scripts/model_scripts/train.py
+      hash: md5
+      md5: f6b4334936bd580a9e611369e83440f2
+      size: 727
+    params:
+      params.yaml:
+        train.criterion: entropy
+        train.max_depth: 6
+        train.min_samples_leaf: 2
+        train.min_samples_split: 3
+    outs:
+    - path: models/model.pkl
+      hash: md5
+      md5: c8f7e0b323004b0d233daea302e5979e
+      size: 598589
+  test-model:
+    cmd: python3 scripts/model_scripts/test.py
+    deps:
+    - path: data/raw/smoking.csv
+      hash: md5
+      md5: 7ecd5f850188866275916276b53a9b6c
+      size: 185262
+    - path: scripts/model_scripts/test.py
+      hash: md5
+      md5: e094a72a78a1da93768acf0bd9011395
+      size: 473
+    outs:
+    - path: evaluate/score.json
+      hash: md5
+      md5: e7821e3a5899ee9fbddf122b805e55e9
+      size: 29

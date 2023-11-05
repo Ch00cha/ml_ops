@@ -1,0 +1,8 @@
+split:
+  split_ratio: 0.2
+  seed: 42
+train:
+  max_depth: 6
+  criterion: entropy
+  min_samples_split: 3
+  min_samples_leaf: 2
